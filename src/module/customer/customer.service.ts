@@ -27,13 +27,13 @@ export class CustomerService {
 
     async createCustomer(partial: Partial<ICustomer>): Promise<ICustomer> {
         const customer = await this.customers.create(partial)
-        if (!customer) throw new BadRequestError("User creation failed")
+        if (!customer) throw new BadRequestError("Customer creation failed")
         return customer
     }
 
     async updateCustomer(id: string, partial: Partial<ICustomer>): Promise<ICustomer> {
         const customer = await this.customers.update(id, partial)
-        if (!customer) throw new BadRequestError("User update failed")
+        if (!customer) throw new BadRequestError("Customer update failed")
         return customer
     }
 

@@ -34,7 +34,6 @@ const ProductSchema = new Schema<IProduct>({
         required: true,
         default: 0,
         min: 0,
-
     },
     ratings: {
         type: [Schema.Types.ObjectId],
@@ -91,3 +90,6 @@ const ProductSchema = new Schema<IProduct>({
     },
 }
     , { timestamps: true });
+
+
+export const Product = model<IProduct>("Product", ProductSchema);
