@@ -29,6 +29,7 @@ export class AuthController {
     // This is handled by passport
   }
 
+<<<<<<< HEAD
   @Get("/google/callback")
   async googleCallback(@Req() req: Request, @Res() res: Response) {
     return new Promise((resolve, reject) => {
@@ -49,6 +50,49 @@ export class AuthController {
             return res.redirect("/login?error=authentication_failed");
           }
           req.logIn(user, (err) => {
+=======
+    @Get('/google')
+    @UseBefore(passport.authenticate('google', {
+        scope: ['profile', 'email'],
+        session: true
+    }))
+    async googleAuth() {
+        // This is handled by passport
+    }
+
+    @Get('/google/callback')
+    async googleCallback(@Req() req: Request, @Res() res: Response) {
+        return new Promise((resolve, reject) => {
+            passport.authenticate('google', {
+                failureRedirect: '/login',
+                session: true
+            }, (err: any, user: any) => {
+                if (err) {
+                    console.error('Authentication Error:', err);
+                    return res.redirect('/login?error=' + encodeURIComponent(err.message));
+                }
+                if (!user) {
+                    return res.redirect('/login?error=authentication_failed');
+                }
+                req.logIn(user, (err) => {
+                    if (err) {
+                        console.error('Login Error:', err);
+                        return res.redirect('/login?error=' + encodeURIComponent(err.message));
+                    }
+
+                    console.log('User:', user);
+                    return res.redirect(
+                        `http://localhost:3001/dashboard?name=${user.profile}&email=${user.email}`
+                    );
+                });
+            })(req, res);
+        });
+    }
+
+    @Get('/logout')
+    async logout(@Req() req: Request, @Res() res: Response) {
+        req.logout((err) => {
+>>>>>>> 667e946e70e2a6d881e8c2f253962847c77526ab
             if (err) {
               console.error("Login Error:", err);
               return res.redirect(

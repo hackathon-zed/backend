@@ -34,7 +34,7 @@ export class FaqController {
   }
 
   @Post("/create")
-  async createFaq(@Body() body: , @Res() response: any) {
+  async createFaq(@Body() body: any, @Res() response: any) {
     const { question, answer } = body;
     console.log("question", question);
     try {

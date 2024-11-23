@@ -11,7 +11,8 @@ const {
   MONGO_URI,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  GOOGLE_CALLBACK_URL
+  GOOGLE_CALLBACK_URL,
+  GROQ_API_KEY
 } = process.env;
 
 export const enviroment: IEnviroment = {
@@ -25,6 +26,9 @@ export const enviroment: IEnviroment = {
     clientId: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackUrl: GOOGLE_CALLBACK_URL
+  },
+  groq: {
+    apiKey: GROQ_API_KEY
   }
 
 } as IEnviroment;
