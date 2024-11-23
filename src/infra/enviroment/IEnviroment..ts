@@ -12,4 +12,8 @@ export type IEnviroment = {
     readonly callbackUrl: string;
   }
 
+  readonly groq: {
+    readonly apiKey: string;
+  }
+
 };

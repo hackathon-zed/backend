@@ -21,4 +21,10 @@ export class ProductService {
         if (!product) throw new BadRequestError("Product creation failed")
         return product
     }
+
+    async updateProduct(id: string, partial: Partial<IProduct>): Promise<IProduct> {
+        const product = await this.products.update(id, partial)
+        if (!product) throw new BadRequestError("Product update failed")
+        return product
+    }
 }
