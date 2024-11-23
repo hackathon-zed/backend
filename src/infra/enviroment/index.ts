@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const { 
+const {
   PORT,
   NODE_ENV,
   CORS_ORIGIN,
@@ -12,7 +12,13 @@ const {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
-  GROQ_API_KEY
+  GROQ_API_KEY,
+  AZURE_OCR_API_KEY,
+  AZURE_OCR_ENDPOINT,
+  AZURE_OCR_REGION,
+  AZURE_SPEECH_TO_TEXT_API_KEY,
+  AZURE_SPEECH_TO_TEXT_ENDPOINT,
+  AZURE_SPEECH_TO_TEXT_REGION
 } = process.env;
 
 export const enviroment: IEnviroment = {
@@ -29,6 +35,20 @@ export const enviroment: IEnviroment = {
   },
   groq: {
     apiKey: GROQ_API_KEY
+  },
+
+  azure: {
+    ocr: {
+      apiKey: AZURE_OCR_API_KEY,
+      endpoint: AZURE_OCR_ENDPOINT,
+      region: AZURE_OCR_REGION
+    },
+    speechtotext: {
+      apiKey: AZURE_SPEECH_TO_TEXT_API_KEY,
+      endpoint: AZURE_SPEECH_TO_TEXT_ENDPOINT,
+      region: AZURE_SPEECH_TO_TEXT_REGION
+    }
   }
+
 
 } as IEnviroment;
