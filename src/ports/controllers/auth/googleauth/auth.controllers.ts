@@ -40,7 +40,11 @@ export class AuthController {
                         console.error('Login Error:', err);
                         return res.redirect('/login?error=' + encodeURIComponent(err.message));
                     }
-                    return res.redirect('/api/v1/test/private');
+
+                    console.log('User:', user);
+                    return res.redirect(
+                        `http://localhost:3001/dashboard?name=${user.profile}&email=${user.email}`
+                    );
                 });
             })(req, res);
         });
