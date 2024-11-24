@@ -17,18 +17,10 @@ const CustomerSchema = new Schema<ICustomer>({
     email: {
         type: String,
         unique: true,
-        required: function () {
-            return this.metadata.provider === 'google' || this.metadata.provider === 'local';
-        },
+        required: false,
         sparse: true,
         lowercase: true,
         trim: true,
-        validate: {
-            validator: function (email) {
-                return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-            },
-            message: 'Invalid email address'
-        }
     },
     phone: {
         type: String,

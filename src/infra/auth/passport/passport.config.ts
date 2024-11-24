@@ -1,15 +1,19 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Service } from 'typedi';
+import { Inject, Service } from 'typedi';
 import { enviroment } from '../../enviroment';
+import { CustomerService } from '../../../module';
+import { Customer, ICustomer } from '../../../core/model/customer';
 
 
-const users: any[] = [];
 
 @Service()
 export class PassportConfig {
-    constructor() {
+    constructor(
+        @Inject("customer.service") private readonly customerService: CustomerService
+    ) {
         this.initialize();
+
     }
 
     initialize() {
@@ -18,16 +22,30 @@ export class PassportConfig {
                 clientID: enviroment.oauth.clientId,
                 clientSecret: enviroment.oauth.clientSecret,
                 callbackURL: enviroment.oauth.callbackUrl
-            }, (accessToken, refreshToken, profile, done) => {
+            }, async (accessToken, refreshToken, profile, done) => {
                 try {
-                    let user = users.find((u) => u.googleId === profile.id);
+                    console.log("Profile", profile);
+                    const existingCustomer = await Customer.findOne({ "metadata.googleId": profile.id });
+                    if (!existingCustomer) {
+                        const newCustomer = await this.customerService.createCustomer({
 
-                    if (!user) {
-                        // Create a new user if not found
-                        user = { id: users.length + 1, googleId: profile.id, profile };
-                        users.push(user);
+                            name: profile.displayName,
+                            email: profile.emails ? profile.emails[0].value : '',
+                            metadata: {
+                                googleId: profile.id,
+                                provider: profile.provider,
+                                emailVerified: profile.emails ? profile.emails[0].verified : false,
+                                profileImageUrl: profile.photos ? profile.photos[0].value : '',
+                                phoneVerified: false,
+                                facebookId: "",
+                            },
+                        });
+
+                        return done(null, newCustomer);
                     }
-                    done(null, user);
+
+
+                    done(null, existingCustomer);
                 } catch (error) {
                     done(error);
                 }
@@ -36,12 +54,12 @@ export class PassportConfig {
 
 
         passport.serializeUser((user: any, done) => {
-            done(null, user.id);   // Serialize user by id
+            done(null, user.id); // Serialize user by id
         });
 
         passport.deserializeUser((id, done) => {
-            const user = users.find((u) => u.id === id);  // Find user by id
-            done(null, user || null); // If user not found, return null
+            // Deserialize user by id
+            done(null, { id: id });
         });
     }
 };

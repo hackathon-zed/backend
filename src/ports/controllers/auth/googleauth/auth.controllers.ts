@@ -6,13 +6,23 @@ import {
   UseBefore,
   UseAfter,
 } from "routing-controllers";
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import passport, { use } from "passport";
 import { Request, Response } from "express";
+import { Customer, ICustomer } from "../../../../core/model/customer";
+import { CustomerService } from "../../../../module";
 
 @Service()
 @JsonController("/auth")
 export class AuthController {
+
+  constructor(
+    @Inject("customer.service") private readonly customerService: CustomerService
+  ) {
+
+
+  }
+
   @Get()
   async test(@Req() req: any, @Res() res: any) {
     return res.send("<a href='/api/v1/auth/google'>Login with google</a>");
@@ -44,17 +54,18 @@ export class AuthController {
         if (!user) {
           return res.redirect('/login?error=authentication_failed');
         }
-        req.logIn(user, (err) => {
+
+        req.logIn(user, async (err) => {
           if (err) {
             console.error('Login Error:', err);
             return res.redirect('/login?error=' + encodeURIComponent(err.message));
           }
 
-          console.log('User:', user);
+
           return res.redirect(
-            `http://localhost:3001/dashboard?name=${user.profile}&email=${user.email}`
+            `http://localhost:3001/dashboard?customer=${encodeURIComponent(JSON.stringify(user))}`
           );
-        }); 
+        });
       })(req, res);
     });
   }

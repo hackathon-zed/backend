@@ -120,12 +120,6 @@ export class SpeechTextService {
                     resolve({ translatedText });
                     recognizer.stopContinuousRecognitionAsync();
                 };
-
-                // Handle cancellations
-                recognizer.canceled = (s, e) => {
-                    console.error("Translation canceled:", e.errorDetails);
-                    reject("Translation canceled: " + e.errorDetails);
-                };
             });
         } catch (error: any) {
             console.error("Error processing the audio file:", error);
