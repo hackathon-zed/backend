@@ -10,6 +10,11 @@ export class ProductService {
         @Inject("product.store") private readonly products: ProductStore
     ) { }
 
+
+    async getAllProduct(): Promise<IProduct[]> {
+        return await this.products.fetchAllProdut()
+    }
+
     async findUniqueOrFail(filter: Partial<IProduct>): Promise<IProduct> {
         const product = await this.products.get(filter)
         if (!product) throw new NotFoundError("Product Not Found")

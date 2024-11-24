@@ -25,4 +25,4 @@ export const azureBlobStorageMiddleware = multer({
     limits: {
         fileSize: 5 * 1024 * 1024, // 5MB file size limit
     },
-}).single("image"); // "image" is the field name in the form-data
+}).single("images"); // "image" is the field name in the form-data

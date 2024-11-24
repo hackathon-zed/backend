@@ -23,7 +23,6 @@ const ProductSchema = new Schema<IProduct>({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category',
-        required: true,
     },
     images: {
         type: [String],
@@ -39,37 +38,27 @@ const ProductSchema = new Schema<IProduct>({
         type: [Schema.Types.ObjectId],
         ref: 'ProductRating',
         default: [],
-        required: true,
     },
-    averageRating: {
-        type: Number,
-        default: 0,
-        required: true,
-    },
+
     shippingCost: {
         type: Number,
-        required: true,
         default: 0,
 
     },
     tax: {
         type: Number,
-        required: true,
         default: 0,
     },
     isActive: {
         type: Boolean,
-        required: true,
         default: true,
     },
     isFeatured: {
         type: Boolean,
-        required: true,
         default: false,
     },
     isOnSale: {
         type: Boolean,
-        required: true,
         default: false,
     },
     salePrice: {
@@ -86,7 +75,6 @@ const ProductSchema = new Schema<IProduct>({
     },
     sku: {
         type: String,
-        required: true,
     },
 }
     , { timestamps: true });

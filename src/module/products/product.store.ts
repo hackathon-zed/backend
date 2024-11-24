@@ -5,6 +5,14 @@ import { FilterQuery, Types } from "mongoose";
 
 @Service("product.store")
 export class ProductStore {
+
+
+    async fetchAllProdut(): Promise<IProduct[]> { 
+        return await Product.find();
+    }
+
+
+
     async get(filter: FilterQuery<IProduct>): Promise<IProduct | null> {
         return await Product.findOne(filter);
     }

@@ -11,7 +11,6 @@ export interface IProduct {
     images: IProductImage[];            // Array of product images
     attributes: IProductAttribute[];    // Additional product attributes
     ratings: Types.ObjectId[];          // Customer ratings
-    averageRating: number;              // Average rating for the product
     createdAt: Date;                    // Timestamp for product creation
     updatedAt: Date;                    // Timestamp for last update
     isActive: boolean;                  // Flag to indicate if the product is active
