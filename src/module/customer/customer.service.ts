@@ -4,9 +4,9 @@ import { BadRequestError, NotFoundError } from "routing-controllers";
 import { ICustomer } from "../../core/model/customer";
 import { CustomerStore } from "./customer.store";
 
-@Service("faq.service")
+@Service("customer.service")
 export class CustomerService {
-  constructor(@Inject("faq.store") private readonly customers: CustomerStore) {}
+  constructor(@Inject("customer.store") private readonly customers: CustomerStore) {}
 
   async findUniqueOrFail(filter: Partial<ICustomer>): Promise<ICustomer> {
     const custoemr = await this.customers.get(filter);

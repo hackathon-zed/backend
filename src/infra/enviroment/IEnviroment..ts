@@ -18,9 +18,11 @@ export type IEnviroment = {
 
   readonly azure: {
     readonly ocr: {
-      readonly apiKey: string;
-      readonly endpoint: string;
+      readonly ocrapiKey: string;
+      readonly ocrendpoint: string;
       readonly region: string;
+      readonly translatorapiKey: string;
+      readonly translatorendpoint: string;
     },
     readonly speechtotext: {
       readonly apiKey: string;
